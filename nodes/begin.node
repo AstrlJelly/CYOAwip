@@ -1,3 +1,5 @@
-There is a chest, open it?
-;prompt
-;go second
+There is a chest, open it?1
+There is a chest, open it?2
+There is a chest, open it?3
+;go begin
+There is a chest, open it?4
