@@ -8,6 +8,9 @@
 #include <future>
 #include <filesystem>
 
+#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio/miniaudio.h"
+
 #include "action.hpp"
 #include "node.hpp"
 

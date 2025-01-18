@@ -26,6 +26,17 @@ std::optional<std::string> Prompt::execute()
     return std::nullopt;
 }
 
+
+PlaySFX::PlaySFX()
+{
+
+}
+
+std::optional<std::string> PlaySFX::execute()
+{
+    return std::nullopt;
+}
+
 MoveTo::MoveTo(std::string nodeName)
 {
     this->nodeName = nodeName;

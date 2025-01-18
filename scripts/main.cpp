@@ -51,8 +51,6 @@ void mainLoop(nodeDict nodes) {
     }
 
     // gets the first node of the node dict
-    //std::string currentNodeName = (*nodes.begin()).first;
-    //Node* currentNode = (*nodes.begin()).second;
     std::string currentNodeName = beginNode;
     Node* currentNode = nodes.at(beginNode);
 

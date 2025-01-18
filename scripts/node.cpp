@@ -22,7 +22,6 @@ Node::Node(std::string filePath)
             // ignore empty lines
             if (nodeText.empty()) continue;
 
-
             // state machines :DD
             // actually might not want to use a state machine, instead opting for a single bool
             // all we need to know is if we should add the character to the action or not?

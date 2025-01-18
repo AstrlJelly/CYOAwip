@@ -39,6 +39,16 @@ public:
     std::optional<std::string> execute() override;
 };
 
+class PlaySFX : public Action
+{
+private:
+    std::string pathToSfx;
+
+public:
+    PlaySFX();
+    std::optional<std::string> execute() override;
+};
+
 class MoveTo : public Action
 {
 private:
