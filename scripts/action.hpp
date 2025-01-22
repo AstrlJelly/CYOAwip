@@ -6,6 +6,7 @@
 #include <chrono>
 #include <unordered_map>
 
+
 class Action
 {
 private:
@@ -29,13 +30,19 @@ public:
     std::optional<std::string> execute() override;
 };
 
+struct Answer
+{
+    std::string option;
+    std::string node;
+};
+
 class Prompt : public Action
 {
 private:
-    std::vector<std::string> answers;
+    std::vector<Answer> answers;
 
 public:
-    Prompt();
+    Prompt(std::string parametersStr);
     std::optional<std::string> execute() override;
 };
 
@@ -56,15 +63,6 @@ private:
 
 public:
     MoveTo(std::string nodeName);
-    std::optional<std::string> execute() override;
-};
-
-class CustomAction : public Action
-{
-private:
-    std::function<void()> action;
-public:
-    CustomAction(std::function<void()> action);
     std::optional<std::string> execute() override;
 };
 

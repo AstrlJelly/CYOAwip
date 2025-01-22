@@ -13,6 +13,7 @@ int main()
     {
         std::string filePath = entry.path().string();
 
+        // file type check
         size_t lastPeriodIndex = filePath.find_last_of('.');
         std::string fileExtension = filePath.substr(lastPeriodIndex + 1);
         if (fileExtension != "node") {

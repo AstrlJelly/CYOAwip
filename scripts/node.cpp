@@ -15,40 +15,58 @@ Node::Node(std::string filePath)
     std::ifstream nodeFile(filePath);
     std::string nodeText{};
 
+    //std::stringstream nodeBuf{};
+
+    //nodeBuf << nodeFile.rdbuf();
+
+    //std::string nodeText = nodeBuf.str();
+
     if (nodeFile.is_open())
     {
-        while (getline(nodeFile, nodeText))
+        while (std::getline(nodeFile, nodeText))
         {
+            std::cout << "nodeText : " << nodeText << '\n';
             // ignore empty lines
             if (nodeText.empty()) continue;
 
-            // state machines :DD
-            // actually might not want to use a state machine, instead opting for a single bool
-            // all we need to know is if we should add the character to the action or not?
             std::string unparsedAction{};
-            int state = 0 | LINE_ACTION_STATE;
+            bool cancelChar = false;
+            bool commenting = false;
 
             for (unsigned int i = 0; i < nodeText.size(); i++)
             {
-                switch (nodeText[i]) {
-                case ';':
-                    this->addAction(parseAction(unparsedAction));
-                    state &= ~LINE_ACTION_STATE; // remove
-                    state |= OTHER_ACTION_STATE; // add
-                    break;
-                case '#':
-                    state ^= COMMENT_STATE; // swap
-                    break;
-                default:
-                    break;
+                if (!cancelChar)
+                {
+                    switch (nodeText[i]) {
+                    case '#':
+                        commenting = !commenting;
+                        break;
+                    case '\\':
+                        cancelChar = true;
+                        break;
+                    default:
+                        // add to action if not in comment state
+                        if (!commenting)
+                        {
+                            unparsedAction += nodeText[i];
+                        }
+                        break;
+                    }
+                    cancelChar = false;
                 }
-                // add to action if not in comment state
-                if ((state & COMMENT_STATE) == 0) {
-                    unparsedAction += nodeText[i];
+                else {
+
+                    // add to action if not in comment state
+                    if (!commenting)
+                    {
+                        unparsedAction += nodeText[i];
+                    }
                 }
             }
-            if (unparsedAction.size() > 0) {
-                this->addAction(parseAction(unparsedAction));
+            if (unparsedAction.length() > 0)
+            {
+                Action* action = parseAction(unparsedAction);
+                if (action) this->addAction(action);
             }
         }
     exitNode:

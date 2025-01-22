@@ -35,11 +35,6 @@ wip ;playsfx - plays a sound effect, the parameter must be the sfx path
 
 */
 
-// bitmasks for the parsing state machine
-constexpr int LINE_ACTION_STATE  = 1 << 0;
-constexpr int OTHER_ACTION_STATE = 1 << 1;
-constexpr int COMMENT_STATE      = 1 << 2;
-constexpr int UNUSED_STATE       = 1 << 3;
 
 class Node
 {
