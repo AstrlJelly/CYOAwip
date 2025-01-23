@@ -195,6 +195,6 @@ Action* parseAction(std::string nodeText)
     else
     {
         std::cerr << "actionString was wrong. is \"" << actionString << "\" the command you want?\n";
-        return nullptr;
     }
+    return nullptr;
 }
