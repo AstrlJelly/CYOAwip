@@ -1,0 +1,19 @@
+As you step onto the balcony, absorbing the pleasant orange hue of the sunset...
+;prompt
+...a bird twice your size swoops down and picks you up by your head.
+
+
+
+PANIC!!
+PANIC!!!!!!!!
+WHAT DO YOU DO?
+DO YOU 'ACCEPT' YOUR DESIGNED FATE, OR WILL YOU TAKE MATTERS INTO YOUR OWN HANDS?
+OR MIGHT I SAY, YOUR FISTS?
+;prompt
+;set textdelay 500
+...
+;prompt
+;set textdelay 30
+I'm asking you if you want to 'punch' the bird.
+
+;prompt { accept, birdNap/accept } { punch, birdNap/punch }

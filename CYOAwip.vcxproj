@@ -29,9 +29,7 @@
     <ClInclude Include="scripts\node.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="nodes\begin.node">
-      <FileType>Document</FileType>
-    </Text>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

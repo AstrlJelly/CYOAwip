@@ -7,14 +7,19 @@
 #include <unordered_map>
 
 
+typedef std::unordered_map<std::string, long> variableMap;
+
+#define EXECUTE_PARAMETERS std::string* nextNodeName, variableMap nodeVariables
+#define EXECUTE_FUNC void execute(EXECUTE_PARAMETERS)
+#define OVERRIDE_EXECUTE EXECUTE_FUNC override
+
 class Action
 {
 private:
 
 public:
-    virtual std::optional<std::string> execute() {
+    virtual EXECUTE_FUNC {
         std::cerr << "Action::execute should not be called. Hmmmmm\n";
-        return std::nullopt;
     };
 };
 
@@ -24,10 +29,29 @@ private:
     std::string text;
 
 public:
-    const std::chrono::milliseconds defaultTextSpeed = std::chrono::milliseconds(30);
-
     Text(std::string text);
-    std::optional<std::string> execute() override;
+    OVERRIDE_EXECUTE;
+};
+
+class Pause : public Action
+{
+private:
+    std::chrono::milliseconds pauseTime;
+
+public:
+    Pause(std::string parametersStr);
+    OVERRIDE_EXECUTE;
+};
+
+class Set : public Action
+{
+private:
+    std::string variableName;
+    long variableValue;
+
+public:
+    Set(std::string parametersStr);
+    OVERRIDE_EXECUTE;
 };
 
 struct Answer
@@ -43,7 +67,7 @@ private:
 
 public:
     Prompt(std::string parametersStr);
-    std::optional<std::string> execute() override;
+    OVERRIDE_EXECUTE;
 };
 
 class PlaySFX : public Action
@@ -53,7 +77,7 @@ private:
 
 public:
     PlaySFX();
-    std::optional<std::string> execute() override;
+    OVERRIDE_EXECUTE;
 };
 
 class MoveTo : public Action
@@ -63,7 +87,7 @@ private:
 
 public:
     MoveTo(std::string nodeName);
-    std::optional<std::string> execute() override;
+    OVERRIDE_EXECUTE;
 };
 
 Action* parseAction(std::string nodeText);

@@ -7,4 +7,4 @@ She has long, jet black hair, and looks to be a fair bit tall. You swear you saw
 ;prompt
 "Iiii am known as merrrchant arounnnd these partsss..
 would you like to seeee my waresss?" ('yes', 'no')
-;prompt { yes, msMerchant/yesWares } { no, msMerchant/noWares }
+;prompt { yes, msMerchantYesWares } { no, msMerchantNoWares }

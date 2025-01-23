@@ -13,8 +13,7 @@
 ; gives a command, # is for comments
 
 to do a command, do `;{command} {params}`
-to comment, you can do `# comment` or `# comment #`
-    to put a comment in the middle of a line
+to comment, you can do `# comment` or `# comment #` to put a comment in the middle of a line
 
 IMPORTANT NOTE:
 do not name nodes `null.node`! `null` is used to refer to a nonexistant node
@@ -28,6 +27,9 @@ all commands:
         - when parameters are inputted, it will give the user an option,
           and do things depending on the choice
 
+;set - set custom variables
+     - node variables: textspeed
+
 wip ;playsfx - plays a sound effect, the parameter must be the sfx path
 
 ;go - moves to another node, the parameter must be the file name
@@ -39,9 +41,10 @@ wip ;playsfx - plays a sound effect, the parameter must be the sfx path
 class Node
 {
 private:
-    std::vector<Action*> actions;
 
 public:
+    std::vector<Action*> actions;
+
     Node();
     Node(std::initializer_list<Action*> actions);
     Node(std::string filePath);
@@ -51,5 +54,6 @@ public:
     static Node* fromFile(std::string filePath);
 
     void addAction(Action* action);
-    std::optional<std::string> doActions();
+    //std::optional<std::string> doActions();
+
 };

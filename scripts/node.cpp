@@ -15,17 +15,10 @@ Node::Node(std::string filePath)
     std::ifstream nodeFile(filePath);
     std::string nodeText{};
 
-    //std::stringstream nodeBuf{};
-
-    //nodeBuf << nodeFile.rdbuf();
-
-    //std::string nodeText = nodeBuf.str();
-
     if (nodeFile.is_open())
     {
         while (std::getline(nodeFile, nodeText))
         {
-            std::cout << "nodeText : " << nodeText << '\n';
             // ignore empty lines
             if (nodeText.empty()) continue;
 
@@ -101,18 +94,18 @@ void Node::addAction(Action* action)
 	this->actions.push_back(action);
 }
 
-// returns name of next node
-std::optional<std::string> Node::doActions()
-{
-	for (unsigned int i = 0; i < actions.size(); i++) {
-		Action* currentAction = actions[i];
-		// if the action execution returns a string, return that string
-		// only(?) case possible is that it's the name of the next node
-		std::optional<std::string> nextNodeName = currentAction->execute();
-		if (nextNodeName.has_value()) {
-			return nextNodeName.value();
-		}
-		// else just continue
-	}
-	return std::nullopt;
-}
+//// returns name of next node
+//std::optional<std::string> Node::doActions()
+//{
+//	for (unsigned int i = 0; i < actions.size(); i++) {
+//		Action* currentAction = actions[i];
+//		// if the action execution returns a string, return that string
+//		// only(?) case possible is that it's the name of the next node
+//		std::optional<std::string> nextNodeName = currentAction->execute();
+//		if (nextNodeName.has_value()) {
+//			return nextNodeName.value();
+//		}
+//		// else just continue
+//	}
+//	return std::nullopt;
+//}

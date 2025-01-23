@@ -6,28 +6,27 @@ int main()
     // local variable baybee
     nodeDict nodes{};
 
-    // go through every top level file in the nodes file, no matter what file
-    // get this to look in subfolders correctly
-    // i.e assigning nodes like `forest/journey1` instead of just `journey1`
+    // recursively go through every file in the nodes file
+    // assigns nodes like `forest/journey1` instead of just `journey1`
+    fs::path rootPath = fs::path(nodesPath);
+
     for (const fs::directory_entry& entry : fs::recursive_directory_iterator(nodesPath))
     {
-        std::string filePath = entry.path().string();
+        fs::path filePath = entry.path();
+        std::string filePathStr = filePath.string();
+        // make it consistent, always keep \ to be /
+        std::replace(filePathStr.begin(), filePathStr.end(), '\\', '/');
 
-        // file type check
-        size_t lastPeriodIndex = filePath.find_last_of('.');
-        std::string fileExtension = filePath.substr(lastPeriodIndex + 1);
-        if (fileExtension != "node") {
+        // little file type check ^_^ yay
+        std::string extension = filePath.extension().string();
+        if (extension != ".node" && extension != ".nod") {
             continue;
         }
 
-        // store slash index to be used as an offset of the period index
-        // basically, "hello" with (2, 3) will give "llo", not "l"
-        // so the latter parameter must be offset by the first, if using absolute indexes
-        size_t lastSlashIndex = filePath.find_last_of("/\\");
-        std::string nodeName = filePath.substr(lastSlashIndex + 1, lastPeriodIndex - lastSlashIndex - 1);
-        std::cout << "nodeName : " << nodeName << '\n';
+        size_t startIndex = rootPath.string().length();
+        std::string nodeName = filePathStr.substr(startIndex, filePathStr.length() - extension.length() - startIndex);
 
-        Node* node = new Node(filePath);
+        Node* node = new Node(filePathStr);
 
         nodes.insert({ nodeName, node });
     }
@@ -42,7 +41,7 @@ void mainLoop(nodeDict nodes) {
     // just for testing!!
     std::cout << '\n';
 
-    bool stopRunning = false;
+    bool keepRunning = true;
 
     // should never happen in a finished product
     if (nodes.empty())
@@ -53,23 +52,36 @@ void mainLoop(nodeDict nodes) {
 
     // gets the first node of the node dict
     std::string currentNodeName = beginNode;
-    Node* currentNode = nodes.at(beginNode);
+    Node* currentNode = nodes[beginNode];
 
-    while (!stopRunning)
+    variableMap globalVariables{};
+
+    while (keepRunning)
     {
-        // optional that contains either the next node, or no node, which terminates the program
-        // mayhaps work on getting a custom return value? might be unnecessary
-        // if something needs to be done before the program is terminated, it can be done in a node
-        std::optional<std::string> nextNodeName = currentNode->doActions();
-        if (nextNodeName.has_value())
-        {
-            currentNodeName = nextNodeName.value();
-            // awesome O(1) operation (in O(n) space because hashsets can do that sometimes)
-            currentNode = nodes.at(currentNodeName);
+        // initialize vector with default variables
+        variableMap nodeVariables(nodeDefaultVariables);
+        std::string nextNodeName;
+        for (unsigned int i = 0; i < currentNode->actions.size(); i++) {
+            Action* currentAction = currentNode->actions.at(i);
+            nextNodeName.clear();
+            currentAction->execute(&nextNodeName, nodeVariables);
+            if (nextNodeName.length() > 0) {
+                // only real acceptable use of goto
+                // unfortunate that c++ can't name loops, but oh well!
+                goto exitActionsLoop;
+            }
         }
-        else
-        {
-            break;
+        // should not trigger naturally, but it should be fine if it does?
+        if (nextNodeName.length() > 0) {
+exitActionsLoop:
+            currentNodeName = nextNodeName;
+            // awesome hashmap O(1) operation!! :D
+            currentNode = nodes[currentNodeName];
+            if (!currentNode) {
+                std::cerr << "Node with name \"" << currentNodeName << "\" was not found.";
+                keepRunning = false;
+                break;
+            }
         }
     }
 }

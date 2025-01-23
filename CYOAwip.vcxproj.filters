@@ -40,8 +40,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="nodes\begin.node">
-      <Filter>Resource Files\Nodes</Filter>
-    </Text>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
