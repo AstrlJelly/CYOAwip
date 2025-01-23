@@ -1,0 +1,14 @@
+You decide against it.
+;pause 1000
+Mysterious wares, sold by a mysterious woman?
+;pause 500
+That's a formula for an extremely mysterious night.
+;pause 1000
+And after the day you just had, you could probably swear off mystery for the rest of your life!
+;pause 500
+You won't, of course.
+;pause 1500
+That would be silly.
+;pause 500
+Instead, you head up to your hotel room, slightly more uneasy than you were before meeting this "Merchant".
+;go hotelRoom/arrive

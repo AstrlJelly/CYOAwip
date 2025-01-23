@@ -1,0 +1,12 @@
+;pause 1000
+ 
+;pause 1000
+ 
+;pause 1000
+You've met with a terrible fate, haven't you?
+;pause 1000
+;text How unfortunate. 
+;pause 1000
+Best you can do is try again, I suppose.
+;pause 1000
+;go null

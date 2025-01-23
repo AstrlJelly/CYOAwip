@@ -7,6 +7,9 @@
 #include <unordered_set>
 #include <future>
 #include <filesystem>
+#include <execution>
+#include <csignal>
+
 
 // use when implementing ;playsfx action
 //#define MINIAUDIO_IMPLEMENTATION
@@ -25,8 +28,8 @@ typedef std::unordered_map<std::string, Node*> nodeDict;
 
 // no magic strings/variables ^.^
 const char* nodesPath = "./nodes/";
-//const std::string BEGIN_NODE = "begin";
-const std::string BEGIN_NODE = "hotelRoom/balcony";
+const char* savePath = "./save.txt";
+const std::string BEGIN_NODE = "begin";
 const std::chrono::milliseconds defaultTextSpeed = std::chrono::milliseconds(30);
 
 const variableMap globalDefaultVariables{};
@@ -36,3 +39,4 @@ const variableMap nodeDefaultVariables = {
 
 int main(int argc, char* argv[]);
 void mainLoop(nodeDict nodes, std::string beginNode);
+void saveSpot(std::string node);

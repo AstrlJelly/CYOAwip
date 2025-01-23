@@ -1,5 +1,4 @@
 #include "main.hpp"
-#include <execution>
 
 int main(int argc, char* argv[])
 {
@@ -19,14 +18,16 @@ int main(int argc, char* argv[])
 
         // little file type check ^_^ yay
         std::string extension = filePath.extension().string();
-        if (extension != ".node" && extension != ".nod") {
+        if (extension != ".node" && extension != ".nod")
+        {
             continue;
         }
 
         size_t startIndex = rootPath.string().length();
         std::string nodeName = filePathStr.substr(startIndex, filePathStr.length() - extension.length() - startIndex);
 
-        if (nodeName == "null") {
+        if (nodeName == "null")
+        {
             std::cerr << "\"null\" is a reserved node name!\n";
             return -1;
         }
@@ -61,7 +62,7 @@ void mainLoop(nodeDict nodes, std::string beginNode) {
 
     if (!currentNode)
     {
-        std::cout << "Node with name \"" << currentNodeName << "\" was not valid as a begin node.";
+        std::cout << "Node with name \"" << currentNodeName << "\" was not a valid node.";
         return;
     }
 
@@ -73,28 +74,54 @@ void mainLoop(nodeDict nodes, std::string beginNode) {
         // initialize vector with default variables
         variableMap nodeVariables(nodeDefaultVariables);
         std::string nextNodeName;
-        for (unsigned int i = 0; i < currentNode->actions.size(); i++) {
+        for (unsigned int i = 0; i < currentNode->actions.size(); i++)
+        {
+            // using .at() in case actions becomes const
+            // indexing doesn't work with constant vectors
             Action* currentAction = currentNode->actions.at(i);
             nextNodeName.clear();
             currentAction->execute(&nextNodeName, nodeVariables);
-            if (nextNodeName.length() > 0) {
+            // if there is a next node name, that means you have to move to a new node
+            if (nextNodeName.length() > 0)
+            {
                 // only real acceptable use of goto
                 // unfortunate that c++ can't name loops...
                 goto exitActionsLoop;
             }
         }
         // should not trigger naturally, but it should be fine if it does?
-        if (nextNodeName.length() > 0) {
+        if (nextNodeName.length() > 0)
+        {
 exitActionsLoop:
             currentNodeName = nextNodeName;
             // awesome hashmap O(1) operation!! :D
             currentNode = nodes[currentNodeName];
-            if (!currentNode) {
-                std::cerr << "Node with name \"" << currentNodeName << "\" was not found.";
+            if (!currentNode)
+            {
+                // synchronously save over the spot,
+                // since you either died or finished the game
+                saveSpot("");
+                
+                if (currentNodeName != "null")
+                {
+                    std::cerr << "Node with name \"" << currentNodeName << "\" was not found.";
+                }
                 keepRunning = false;
                 break;
+            }
+            else
+            {
+                // async save spot
+                std::async(std::launch::async, saveSpot, currentNodeName);
             }
         }
     }
 }
 
+void saveSpot(std::string node)
+{
+    std::ofstream saveFile(savePath);
+    saveFile.clear();
+    saveFile << node;
+    saveFile.close();
+}

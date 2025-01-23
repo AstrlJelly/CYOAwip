@@ -1,10 +1,11 @@
 You greet the stranger. 
-She has long, jet black hair, and looks to be a fair bit tall. You swear you saw sharp teeth, as well..?
-;prompt
-"Hellooo, younggg oneee." What a charmer.
-;prompt
-"Youuu don't look a dayyyy under 52oooo!\" Oh.
-;prompt
+;pause 1000
+She has long, jet black hair, and looks to be a fair bit tall.
+;pause 500
+You swear you caught a glimpse of some sharp teeth, as well..?
+;pause 1000
+"Hellooo, younggg one."
+;pause 500
 "Iiii am known as merrrchant arounnnd these partsss..
 would you like to seeee my waresss?" ('yes', 'no')
-;prompt { yes, msMerchantYesWares } { no, msMerchantNoWares }
+;prompt { yes, msMerchant/yesWares } { no, msMerchant/noWares }

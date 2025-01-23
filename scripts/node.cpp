@@ -30,7 +30,8 @@ Node::Node(std::string filePath)
             {
                 if (!cancelChar)
                 {
-                    switch (nodeText[i]) {
+                    switch (nodeText[i])
+                    {
                     case '#':
                         commenting = !commenting;
                         break;
@@ -47,7 +48,8 @@ Node::Node(std::string filePath)
                     }
                     cancelChar = false;
                 }
-                else {
+                else
+                {
 
                     // add to action if not in comment state
                     if (!commenting)
@@ -92,19 +94,3 @@ void Node::addAction(Action* action)
 {
 	this->actions.push_back(action);
 }
-
-//// returns name of next node
-//std::optional<std::string> Node::doActions()
-//{
-//	for (unsigned int i = 0; i < actions.size(); i++) {
-//		Action* currentAction = actions[i];
-//		// if the action execution returns a string, return that string
-//		// only(?) case possible is that it's the name of the next node
-//		std::optional<std::string> nextNodeName = currentAction->execute();
-//		if (nextNodeName.has_value()) {
-//			return nextNodeName.value();
-//		}
-//		// else just continue
-//	}
-//	return std::nullopt;
-//}

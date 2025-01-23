@@ -128,12 +128,15 @@ void Prompt::execute(EXECUTE_PARAMETERS)
     std::string response;
     if (answers.size() > 0)
     {
-        while (true) {
+        while (true)
+        {
             std::cout << "?~ ";
             std::getline(std::cin, response);
 
-            for (Answer answer : answers) {
-                if (answer.option == response) {
+            for (Answer answer : answers)
+            {
+                if (answer.option == response)
+                {
                     *nextNodeName = answer.node;
                     return;
                 }
@@ -182,19 +185,23 @@ const std::unordered_map<std::string, std::function<Action* (std::string paramet
 
 Action* parseAction(std::string nodeText)
 {
-    if (nodeText[0] != ';') {
+    if (nodeText[0] != ';')
+    {
         return new Text(nodeText + '\n');
     }
     size_t firstSpaceIndex = nodeText.find(' ');
     std::string actionString = nodeText.substr(1, firstSpaceIndex - 1);
 
     // can't use [] on a const map because of some accessing rules
-    if (commands.count(actionString) > 0) {
+    if (commands.count(actionString) > 0)
+    {
         std::function<Action* (std::string parameters)> actionConstructor = commands.find(actionString)->second;
         if (actionConstructor) {
             return actionConstructor(nodeText.substr(firstSpaceIndex + 1));
         }
-    } else {
+    }
+    else
+    {
         std::cerr << "actionString was wrong. is \"" << actionString << "\" the command you want?\n";
         return nullptr;
     }

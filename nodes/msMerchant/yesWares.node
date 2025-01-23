@@ -1,2 +1,14 @@
 "Ffffffantastic. Not mmanyyy exxxercise curiousssityyy with my waresss."
+;pause 500
 You get the feeling they're somewhat justified in that.
+;pause 500
+"Purrrchase... purrrchase..."
+;pause 500
+You see...
+one bottle of half empty 'soda',
+a used 'bandage',
+a bootlegged 'cd',
+and a ziploc bag of... insect 'eggs'?
+;pause 1500
+Maybe it's best to just 'not' buy anything...
+;prompt { soda, msMerchant/sodaWare } { bandage, msMerchant/bandageWare } { cd, msMerchant/cdWare } { eggs, msMerchant/eggsWare } { not, msMerchant/noPurchase }

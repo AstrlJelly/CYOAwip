@@ -1,4 +1,4 @@
-You arrive to a hotel lobby.
+You arrive to your hotel's lobby.
 You can either take the elevator to your 'room',
 or try to strike up a conversation with the mysterious 'stranger' sitting on the couch.
 ;prompt {   room   ,   hotelRoom/arrive   } {   stranger   ,   msMerchant/lobbyGreet   }
