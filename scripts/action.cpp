@@ -46,8 +46,8 @@ Prompt::Prompt(std::string parametersStr)
 {
     std::string currentOption{};
     std::string currentNode{};
-    int stateMask = 0;
-    int lastWhitespaceIndex = 0;
+    int stateMask = 0b000;
+    int lastStateMask = stateMask;
 
     for (unsigned int i = 0; i < parametersStr.length(); i++)
     {
@@ -93,20 +93,11 @@ Prompt::Prompt(std::string parametersStr)
             case '\\':
                 stateMask |= CANCEL_LAYER;
                 break;
-            default:
-                if (stateMask & OPTION_LAYER)
-                {
-                    currentOption += currentChar;
-                }
-                else if (stateMask & NODE_LAYER)
-                {
-                    currentNode += currentChar;
-                }
-                break;
             }
         }
-        else
-        {
+
+        // if there was no state change, you can add the character
+        if (stateMask == lastStateMask) {
             if (stateMask & OPTION_LAYER)
             {
                 currentOption += currentChar;
@@ -119,6 +110,7 @@ Prompt::Prompt(std::string parametersStr)
             stateMask &= ~CANCEL_LAYER;
         }
 
+        lastStateMask = stateMask;
     }
 }
 

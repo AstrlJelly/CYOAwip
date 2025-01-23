@@ -15,62 +15,59 @@ Node::Node(std::string filePath)
     std::ifstream nodeFile(filePath);
     std::string nodeText{};
 
-    if (nodeFile.is_open())
+    if (!nodeFile.is_open()) {
+        std::cerr << "Node file was unable to be opened.\n";
+        return;
+    }
+    while (std::getline(nodeFile, nodeText))
     {
-        while (std::getline(nodeFile, nodeText))
+        // ignore empty lines
+        if (nodeText.empty()) continue;
+
+        std::string unparsedAction{};
+        bool cancelChar = false;
+        bool commenting = false;
+
+        for (unsigned int i = 0; i < nodeText.size(); i++)
         {
-            // ignore empty lines
-            if (nodeText.empty()) continue;
-
-            std::string unparsedAction{};
-            bool cancelChar = false;
-            bool commenting = false;
-
-            for (unsigned int i = 0; i < nodeText.size(); i++)
+            if (!cancelChar)
             {
-                if (!cancelChar)
+                switch (nodeText[i])
                 {
-                    switch (nodeText[i])
-                    {
-                    case '#':
-                        commenting = !commenting;
-                        break;
-                    case '\\':
-                        cancelChar = true;
-                        break;
-                    default:
-                        // add to action if not in comment state
-                        if (!commenting)
-                        {
-                            unparsedAction += nodeText[i];
-                        }
-                        break;
-                    }
-                    cancelChar = false;
-                }
-                else
-                {
-
+                case '#':
+                    commenting = !commenting;
+                    break;
+                case '\\':
+                    cancelChar = true;
+                    break;
+                default:
                     // add to action if not in comment state
                     if (!commenting)
                     {
                         unparsedAction += nodeText[i];
                     }
+                    break;
+                }
+                cancelChar = false;
+            }
+            else
+            {
+
+                // add to action if not in comment state
+                if (!commenting)
+                {
+                    unparsedAction += nodeText[i];
                 }
             }
-            if (unparsedAction.length() > 0)
-            {
-                Action* action = parseAction(unparsedAction);
-                if (action) this->addAction(action);
-            }
         }
-        // prevent bad stuff
-        nodeFile.close();
+        if (unparsedAction.length() > 0)
+        {
+            Action* action = parseAction(unparsedAction);
+            if (action) this->addAction(action);
+        }
     }
-    else
-    {
-        std::cerr << "Node file was unable to be opened.\n";
-    }
+    // prevent bad stuff
+    nodeFile.close();
 }
 
 Node::~Node()
