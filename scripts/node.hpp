@@ -28,7 +28,7 @@ all commands:
           and do things depending on the choice
 
 ;set - set custom variables
-     - node variables: textspeed
+     - default node variables: textspeed
 
 wip ;playsfx - plays a sound effect, the parameter must be the sfx path
 

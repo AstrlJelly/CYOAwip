@@ -37,9 +37,18 @@ int main(int argc, char* argv[])
         nodes.insert({ nodeName, node });
     }
 
+
+    std::string beginNode{};
+    std::stringstream beginNodeStream{};
+    std::ifstream saveFile(savePath);
+    beginNodeStream << saveFile.rdbuf();
+    beginNode = beginNodeStream.str();
+    if (beginNode.length() <= 0) {
+        beginNode = argc > 1 ? std::string(argv[1]) : BEGIN_NODE;
+    }
+    mainLoop(nodes, beginNode);
     // no need for it to be async... yet.
     //std::async(std::launch::async, mainLoop, nodes);
-    mainLoop(nodes, argc > 1 ? std::string(argv[1]) : BEGIN_NODE);
 
     return 0;
 }
