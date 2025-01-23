@@ -62,7 +62,6 @@ Node::Node(std::string filePath)
                 if (action) this->addAction(action);
             }
         }
-    exitNode:
         // prevent bad stuff
         nodeFile.close();
     }

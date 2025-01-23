@@ -1,18 +1,20 @@
-As you step onto the balcony, absorbing the pleasant orange hue of the sunset...
-;prompt
+As you step onto the balcony, taking in the orange hue of the sunset...
+;pause 1200
 ...a bird twice your size swoops down and picks you up by your head.
-
-
+;pause 1000
 
 PANIC!!
+;pause 100
 PANIC!!!!!!!!
+;pause 200
 WHAT DO YOU DO?
-DO YOU 'ACCEPT' YOUR DESIGNED FATE, OR WILL YOU TAKE MATTERS INTO YOUR OWN HANDS?
+;pause 200
+DO YOU 'ACCEPT' YOUR DESIGNATED FATE, OR WILL YOU TAKE MATTERS INTO YOUR OWN HANDS?
 OR MIGHT I SAY, YOUR FISTS?
-;prompt
+;pause 1000
 ;set textdelay 500
 ...
-;prompt
+;pause 1500
 ;set textdelay 30
 I'm asking you if you want to 'punch' the bird.
 

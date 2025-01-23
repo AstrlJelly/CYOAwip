@@ -76,7 +76,7 @@ private:
     std::string pathToSfx;
 
 public:
-    PlaySFX();
+    PlaySFX(std::string pathToSfx);
     OVERRIDE_EXECUTE;
 };
 

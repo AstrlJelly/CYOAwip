@@ -15,7 +15,7 @@
 #include "action.hpp"
 #include "node.hpp"
 
-// `using namespace std` intentionally left out
+// `using namespace std` was intentionally left out
 // i like how my code looks with the std:: more than without
 
 namespace fs = std::filesystem;
@@ -24,8 +24,9 @@ namespace fs = std::filesystem;
 typedef std::unordered_map<std::string, Node*> nodeDict;
 
 // no magic strings/variables ^.^
-const const char* nodesPath = "./nodes/";
-const std::string beginNode = "begin";
+const char* nodesPath = "./nodes/";
+//const std::string BEGIN_NODE = "begin";
+const std::string BEGIN_NODE = "hotelRoom/balcony";
 const std::chrono::milliseconds defaultTextSpeed = std::chrono::milliseconds(30);
 
 const variableMap globalDefaultVariables{};
@@ -33,5 +34,5 @@ const variableMap nodeDefaultVariables = {
 	{ "textdelay", 30 }
 };
 
-int main();
-void mainLoop(nodeDict nodes);
+int main(int argc, char* argv[]);
+void mainLoop(nodeDict nodes, std::string beginNode);

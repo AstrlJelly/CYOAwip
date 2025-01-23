@@ -27,7 +27,7 @@ void Pause::execute(EXECUTE_PARAMETERS)
 
 Set::Set(std::string parametersStr)
 {
-    int spaceIndex = parametersStr.find_first_of(' ');
+    size_t spaceIndex = parametersStr.find_first_of(' ');
     this->variableName = parametersStr.substr(0, spaceIndex);
     this->variableValue = std::stol(parametersStr.substr(spaceIndex));
 }
@@ -69,12 +69,12 @@ Prompt::Prompt(std::string parametersStr)
                     size_t optionStart = currentOption.find_first_not_of(' ');
                     size_t optionEnd   = currentOption.find_last_not_of(' ');
                     currentOption = currentOption.substr(optionStart, optionEnd + 1 - optionStart);
-                    std::cout << "currentOption : \"" << currentOption << "\"\n";
+                    //std::cout << "currentOption : \"" << currentOption << "\"\n";
 
                     size_t nodeStart = currentNode.find_first_not_of(' ');
                     size_t nodeEnd   = currentNode.find_last_not_of(' ');
                     currentNode = currentNode.substr(nodeStart, nodeEnd + 1 - nodeStart);
-                    std::cout << "currentNode : \"" << currentNode << "\"\n";
+                    //std::cout << "currentNode : \"" << currentNode << "\"\n";
 
                     answers.push_back(Answer{
                         .option = currentOption,
@@ -129,7 +129,7 @@ void Prompt::execute(EXECUTE_PARAMETERS)
     if (answers.size() > 0)
     {
         while (true) {
-            std::cout << "~ ";
+            std::cout << "?~ ";
             std::getline(std::cin, response);
 
             for (Answer answer : answers) {
@@ -149,7 +149,7 @@ void Prompt::execute(EXECUTE_PARAMETERS)
 }
 
 // unimplemented
-PlaySFX::PlaySFX()
+PlaySFX::PlaySFX(std::string pathToSfx)
 {
 
 }
@@ -172,10 +172,12 @@ void MoveTo::execute(EXECUTE_PARAMETERS)
 
 // get at action name
 const std::unordered_map<std::string, std::function<Action* (std::string parameters)>> commands = {
-    { "prompt", [](std::string p) { return new Prompt(p);  } },
-    { "go",     [](std::string p) { return new MoveTo(p); } },
-    { "text",   [](std::string p) { return new Text(p);   } },
-    { "set",    [](std::string p) { return new Set(p);   } },
+    { "text",    [](std::string p) { return new Text(p);    } },
+    { "pause",   [](std::string p) { return new Pause(p);   } },
+    { "set",     [](std::string p) { return new Set(p);     } },
+    { "prompt",  [](std::string p) { return new Prompt(p);  } },
+    { "playsfx", [](std::string p) { return new PlaySFX(p); } },
+    { "go",      [](std::string p) { return new MoveTo(p);  } },
 };
 
 Action* parseAction(std::string nodeText)

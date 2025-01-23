@@ -1,7 +1,7 @@
 #include "main.hpp"
 #include <execution>
 
-int main()
+int main(int argc, char* argv[])
 {
     // local variable baybee
     nodeDict nodes{};
@@ -26,20 +26,26 @@ int main()
         size_t startIndex = rootPath.string().length();
         std::string nodeName = filePathStr.substr(startIndex, filePathStr.length() - extension.length() - startIndex);
 
+        if (nodeName == "null") {
+            std::cerr << "\"null\" is a reserved node name!\n";
+            return -1;
+        }
+
         Node* node = new Node(filePathStr);
 
         nodes.insert({ nodeName, node });
     }
 
-    // fire and forget, we don't need to interact with this loop directly again
-    std::async(std::launch::async, mainLoop, nodes);
+    // no need for it to be async... yet.
+    //std::async(std::launch::async, mainLoop, nodes);
+    mainLoop(nodes, argc > 1 ? std::string(argv[1]) : BEGIN_NODE);
 
     return 0;
 }
 
-void mainLoop(nodeDict nodes) {
+void mainLoop(nodeDict nodes, std::string beginNode) {
     // just for testing!!
-    std::cout << '\n';
+    //std::cout << '\n';
 
     bool keepRunning = true;
 
@@ -50,11 +56,17 @@ void mainLoop(nodeDict nodes) {
         return;
     }
 
-    // gets the first node of the node dict
     std::string currentNodeName = beginNode;
     Node* currentNode = nodes[beginNode];
 
-    variableMap globalVariables{};
+    if (!currentNode)
+    {
+        std::cout << "Node with name \"" << currentNodeName << "\" was not valid as a begin node.";
+        return;
+    }
+
+    // unused as of now
+    //variableMap globalVariables{};
 
     while (keepRunning)
     {
@@ -67,7 +79,7 @@ void mainLoop(nodeDict nodes) {
             currentAction->execute(&nextNodeName, nodeVariables);
             if (nextNodeName.length() > 0) {
                 // only real acceptable use of goto
-                // unfortunate that c++ can't name loops, but oh well!
+                // unfortunate that c++ can't name loops...
                 goto exitActionsLoop;
             }
         }

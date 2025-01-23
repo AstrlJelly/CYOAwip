@@ -1,0 +1,14 @@
+;text Did... 
+;pause 1000
+did you actually just punch the bird?
+;pause 1000
+The bird that's two times bigger than you?
+;pause 1000
+The only thing keeping you from becoming a fresh splat on the sidewalk?
+;pause 2000
+That was stupid.
+;pause 1000
+;text The bird releases you, not out of pain, but out of second-hand embarassment. 
+;pause 1500
+Youch.
+;go death
