@@ -140,7 +140,6 @@ void Prompt::execute(EXECUTE_PARAMETERS)
     {
         std::getline(std::cin, response);
     }
-
 }
 
 // unimplemented

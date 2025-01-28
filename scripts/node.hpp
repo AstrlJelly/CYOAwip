@@ -23,28 +23,30 @@ all commands:
       - when writing plain text, it will be interpreted 
         as a `;text` command with a line break at the end
 
-;prompt - when empty, it will prompt for an enter(?) press.
-        - when parameters are inputted, it will give the user an option,
-          and do things depending on the choice
-
 ;set - set custom variables
      - default node variables: textspeed
 
 wip ;playsfx - plays a sound effect, the parameter must be the sfx path
+
+;prompt - when empty, it will prompt for an enter(?) press.
+        - when parameters are inputted, it will give the user an option,
+          and do things depending on the choice
 
 ;go - moves to another node, the parameter must be the file name
     - i.e battle1.node would have to be `;go battle1`
 
 */
 
+// TODO: classes deriving from Node so that you can have more specialized
+//       behaviour, like BattleNode or 
 
 class Node
 {
 private:
 
+    void addAction(Action* action);
 public:
     std::vector<Action*> actions;
-
     Node();
     Node(std::initializer_list<Action*> actions);
     Node(std::string filePath);
@@ -52,8 +54,4 @@ public:
     ~Node();
 
     static Node* fromFile(std::string filePath);
-
-    void addAction(Action* action);
-    //std::optional<std::string> doActions();
-
 };

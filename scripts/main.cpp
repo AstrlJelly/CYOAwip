@@ -12,16 +12,18 @@ int main(int argc, char* argv[])
     for (const fs::directory_entry& entry : fs::recursive_directory_iterator(nodesPath))
     {
         fs::path filePath = entry.path();
+
+        // little file type check ^_^ yay
+        std::string extension = filePath.extension().string();
+        if(extension != ".node" && extension != ".nod")
+        {
+            continue;
+        }
+
         std::string filePathStr = filePath.string();
         // make it consistent, always keep \ to be /
         std::replace(filePathStr.begin(), filePathStr.end(), '\\', '/');
 
-        // little file type check ^_^ yay
-        std::string extension = filePath.extension().string();
-        if (extension != ".node" && extension != ".nod")
-        {
-            continue;
-        }
 
         size_t startIndex = rootPath.string().length();
         std::string nodeName = filePathStr.substr(startIndex, filePathStr.length() - extension.length() - startIndex);
@@ -37,16 +39,20 @@ int main(int argc, char* argv[])
         nodes.insert({ nodeName, node });
     }
 
-
     std::string beginNode{};
     std::stringstream beginNodeStream{};
     std::ifstream saveFile(savePath);
     beginNodeStream << saveFile.rdbuf();
     beginNode = beginNodeStream.str();
+
+    // if save file didn't exist, check cli args
+    // if not cli args, get default beginning node
     if (beginNode.length() <= 0) {
         beginNode = argc > 1 ? std::string(argv[1]) : BEGIN_NODE;
     }
+
     mainLoop(nodes, beginNode);
+
     // no need for it to be async... yet.
     //std::async(std::launch::async, mainLoop, nodes);
 

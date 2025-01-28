@@ -54,6 +54,17 @@ public:
     OVERRIDE_EXECUTE;
 };
 
+// unimplemented
+class PlaySFX : public Action
+{
+private:
+    std::string pathToSfx;
+
+public:
+    PlaySFX(std::string pathToSfx);
+    OVERRIDE_EXECUTE;
+};
+
 struct Answer
 {
     std::string option;
@@ -67,17 +78,6 @@ private:
 
 public:
     Prompt(std::string parametersStr);
-    OVERRIDE_EXECUTE;
-};
-
-// unimplemented
-class PlaySFX : public Action
-{
-private:
-    std::string pathToSfx;
-
-public:
-    PlaySFX(std::string pathToSfx);
     OVERRIDE_EXECUTE;
 };
 
