@@ -97,6 +97,7 @@ Prompt::Prompt(std::string parametersStr)
         }
 
         // if there was no state change, you can add the character
+        // might actually be a bad idea if any states are added that are also normal characters
         if (stateMask == lastStateMask) {
             if (stateMask & OPTION_LAYER)
             {
@@ -114,7 +115,8 @@ Prompt::Prompt(std::string parametersStr)
     }
 }
 
-// pauses the thread until enter is hit, and checks if entered option was valid
+// pauses the thread until enter is hit, 
+// only checks if entered option was valid if there are options to choose from
 void Prompt::execute(EXECUTE_PARAMETERS)
 {
     std::string response;
@@ -122,7 +124,7 @@ void Prompt::execute(EXECUTE_PARAMETERS)
     {
         while (true)
         {
-            std::cout << "?~ ";
+            std::cout << PROMPT_PREFIX;
             std::getline(std::cin, response);
 
             for (Answer answer : answers)
@@ -138,6 +140,7 @@ void Prompt::execute(EXECUTE_PARAMETERS)
     }
     else
     {
+        // response is basically a discard variable here
         std::getline(std::cin, response);
     }
 }

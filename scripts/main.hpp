@@ -10,27 +10,16 @@
 #include <execution>
 #include <csignal>
 
-
 // use when implementing ;playsfx action
 //#define MINIAUDIO_IMPLEMENTATION
 //#include "miniaudio/miniaudio.h"
 
+#include "defines.hpp"
 #include "action.hpp"
 #include "node.hpp"
 
 // `using namespace std` was intentionally left out
 // i like how my code looks with the std:: more than without
-
-namespace fs = std::filesystem;
-
-// define it here so it's easy to change and also not super ugly
-typedef std::unordered_map<std::string, Node*> nodeDict;
-
-// no magic strings/variables ^.^
-const char* nodesPath = "./nodes/";
-const char* savePath = "./save.txt";
-const std::string BEGIN_NODE = "begin";
-const std::chrono::milliseconds defaultTextSpeed = std::chrono::milliseconds(30);
 
 const variableMap globalDefaultVariables{};
 const variableMap nodeDefaultVariables = {

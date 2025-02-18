@@ -1,5 +1,9 @@
 #include "node.hpp"
 
+// this is to initialize a static variable in the Node class
+// this sucks...
+const char* Node::defaultRootPath = nodesPath;
+
 Node::Node()
 {
 	this->actions = {};
@@ -72,8 +76,11 @@ Node::Node(std::string filePath)
 
 Node::~Node()
 {
-    /* shouldn't be called but im putting it here in case i wanna
-    do some optimization stuff by not keeping nodes in memory 24/7 */
+    /*
+        shouldn't be called but im putting it here in case i wanna
+        do some optimization stuff by not keeping nodes in memory 24/7.
+        TODO: only load necessary nodes by doing some cool recursive stuff ^u^
+    */
     std::cerr << "Node has been destroyed; has something gone wrong?\n";
     for (unsigned int i = 0; i < actions.size(); i++)
     {
@@ -90,4 +97,43 @@ Node* Node::fromFile(std::string filePath)
 void Node::addAction(Action* action)
 {
 	this->actions.push_back(action);
+}
+
+std::string Node::nameFromFilePath(std::filesystem::path filePath, std::string rootPath)
+{
+    SET_DEFAULT_ROOT_IF_NEEDED;
+    
+    std::string filePathStr = filePath.string();
+    std::string extension = filePath.extension().string();
+    // make it consistent, always keep \ to be /
+    std::replace(filePathStr.begin(), filePathStr.end(), '\\', '/');
+
+    size_t startIndex = rootPath.length();
+    std::string nodeName = filePathStr.substr(startIndex, filePathStr.length() - extension.length() - startIndex);
+
+    if (nodeName == "null")
+    {
+        std::cerr << "\"null\" is a reserved node name!\n";
+        return "";
+    }
+    else
+    {
+        return nodeName;
+    }
+}
+
+std::filesystem::path Node::filePathFromName(std::string name, std::string rootPath = "")
+{
+    SET_DEFAULT_ROOT_IF_NEEDED;
+    return std::filesystem::path(rootPath) / std::filesystem::path(name);
+}
+
+Action* Node::getActionAtIndex(size_t index)
+{
+    return actions[index];
+}
+
+size_t Node::getActionsSize()
+{
+    return actions.size();
 }

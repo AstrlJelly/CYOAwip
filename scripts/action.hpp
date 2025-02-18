@@ -6,12 +6,13 @@
 #include <chrono>
 #include <unordered_map>
 
-
-typedef std::unordered_map<std::string, long> variableMap;
+#include "defines.hpp"
 
 #define EXECUTE_PARAMETERS std::string* nextNodeName, variableMap nodeVariables
 #define EXECUTE_FUNC void execute(EXECUTE_PARAMETERS)
 #define OVERRIDE_EXECUTE EXECUTE_FUNC override
+
+constexpr auto PROMPT_PREFIX = "?~ ";
 
 class Action
 {

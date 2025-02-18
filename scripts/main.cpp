@@ -2,13 +2,15 @@
 
 int main(int argc, char* argv[])
 {
-    // local variable baybee
+    // local variable :D
     nodeDict nodes{};
 
     // recursively go through every file in the nodes file
     // assigns nodes like `forest/journey1` instead of just `journey1`
     fs::path rootPath = fs::path(nodesPath);
 
+    // TODO: load nodes based on when other nodes need them, not just every one in the folder
+    //       how will i do this in a clean fashion? no clue. lmao
     for (const fs::directory_entry& entry : fs::recursive_directory_iterator(nodesPath))
     {
         fs::path filePath = entry.path();
@@ -20,21 +22,9 @@ int main(int argc, char* argv[])
             continue;
         }
 
-        std::string filePathStr = filePath.string();
-        // make it consistent, always keep \ to be /
-        std::replace(filePathStr.begin(), filePathStr.end(), '\\', '/');
+        std::string nodeName = Node::nameFromFilePath(filePath, rootPath.string());
 
-
-        size_t startIndex = rootPath.string().length();
-        std::string nodeName = filePathStr.substr(startIndex, filePathStr.length() - extension.length() - startIndex);
-
-        if (nodeName == "null")
-        {
-            std::cerr << "\"null\" is a reserved node name!\n";
-            return -1;
-        }
-
-        Node* node = new Node(filePathStr);
+        Node* node = new Node(filePath.string());
 
         nodes.insert({ nodeName, node });
     }
@@ -89,11 +79,9 @@ void mainLoop(nodeDict nodes, std::string beginNode) {
         // initialize vector with default variables
         variableMap nodeVariables(nodeDefaultVariables);
         std::string nextNodeName;
-        for (unsigned int i = 0; i < currentNode->actions.size(); i++)
+        for (unsigned int i = 0; i < currentNode->getActionsSize(); i++)
         {
-            // using .at() in case actions becomes const
-            // indexing doesn't work with constant vectors
-            Action* currentAction = currentNode->actions.at(i);
+            Action* currentAction = currentNode->getActionAtIndex(i);
             nextNodeName.clear();
             currentAction->execute(&nextNodeName, nodeVariables);
             // if there is a next node name, that means you have to move to a new node
