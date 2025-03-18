@@ -7,11 +7,11 @@ int main(int argc, char* argv[])
 
     // recursively go through every file in the nodes file
     // assigns nodes like `forest/journey1` instead of just `journey1`
-    fs::path rootPath = fs::path(nodesPath);
+    fs::path rootPath = fs::path(NODES_PATH);
 
     // TODO: load nodes based on when other nodes need them, not just every one in the folder
     //       how will i do this in a clean fashion? no clue. lmao
-    for (const fs::directory_entry& entry : fs::recursive_directory_iterator(nodesPath))
+    for (const fs::directory_entry& entry : fs::recursive_directory_iterator(NODES_PATH))
     {
         fs::path filePath = entry.path();
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 
     std::string beginNode{};
     std::stringstream beginNodeStream{};
-    std::ifstream saveFile(savePath);
+    std::ifstream saveFile(SAVE_PATH);
     beginNodeStream << saveFile.rdbuf();
     beginNode = beginNodeStream.str();
 
@@ -123,7 +123,7 @@ exitActionsLoop:
 
 void saveSpot(std::string node)
 {
-    std::ofstream saveFile(savePath);
+    std::ofstream saveFile(SAVE_PATH);
     saveFile.clear();
     saveFile << node;
     saveFile.close();

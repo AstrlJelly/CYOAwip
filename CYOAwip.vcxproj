@@ -85,7 +85,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\miniaudio\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\miniaudio\include;$(USERPROFILE)\Documents\vclib\pdcurses\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\miniaudio\include;$(ExternalIncludePath)</ExternalIncludePath>

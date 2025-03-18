@@ -7,7 +7,7 @@
 
 #include "action.hpp"
 
-const char* nodesPath = "./nodes/";
+constexpr auto NODES_PATH = "./nodes/";
 
 /*
     .node format basic specifications
@@ -68,3 +68,5 @@ public:
     Action* getActionAtIndex(size_t index);
     size_t getActionsSize();
 };
+
+typedef std::unordered_map<std::string,Node*> nodeDict;

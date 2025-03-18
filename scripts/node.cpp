@@ -2,7 +2,7 @@
 
 // this is to initialize a static variable in the Node class
 // this sucks...
-const char* Node::defaultRootPath = nodesPath;
+const char* Node::defaultRootPath = NODES_PATH;
 
 Node::Node()
 {
@@ -122,7 +122,7 @@ std::string Node::nameFromFilePath(std::filesystem::path filePath, std::string r
     }
 }
 
-std::filesystem::path Node::filePathFromName(std::string name, std::string rootPath = "")
+std::filesystem::path Node::filePathFromName(std::string name, std::string rootPath)
 {
     SET_DEFAULT_ROOT_IF_NEEDED;
     return std::filesystem::path(rootPath) / std::filesystem::path(name);

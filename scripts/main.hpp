@@ -11,8 +11,10 @@
 #include <csignal>
 
 // use when implementing ;playsfx action
-//#define MINIAUDIO_IMPLEMENTATION
-//#include "miniaudio/miniaudio.h"
+#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio/miniaudio.h"
+
+#include "pdcurses/pdcurses.h"
 
 #include "defines.hpp"
 #include "action.hpp"
