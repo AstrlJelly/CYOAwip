@@ -137,3 +137,22 @@ size_t Node::getActionsSize()
 {
     return actions.size();
 }
+
+//template <typename T>
+//inline NodeVariable<T>::NodeVariable(T value)
+//{
+//    this->value = value;
+//}
+//
+//template<typename T>
+//NodeVariable<T> NodeVariable<T>::fromString(std::string valueStr)
+//{
+//    
+//    return NodeVariable<T>();
+//}
+//
+//template <typename T>
+//T NodeVariable<T>::getValue()
+//{
+//    return value;
+//}

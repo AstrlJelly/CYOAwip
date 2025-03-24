@@ -10,6 +10,8 @@
 #include <execution>
 #include <csignal>
 
+#include <boost/variant.hpp>
+
 // use when implementing ;playsfx action
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio/miniaudio.h"
@@ -23,9 +25,10 @@
 // `using namespace std` was intentionally left out
 // i like how my code looks with the std:: more than without
 
-const variableMap globalDefaultVariables{};
-const variableMap nodeDefaultVariables = {
-	{ "textdelay", 30 }
+const nodeVariableMap defaultGlobalVariables = {
+};
+const nodeVariableMap defaultNodeVariables = {
+	{"textdelay",nodeVariable(defaultTextDelay)}
 };
 
 int main(int argc, char* argv[]);

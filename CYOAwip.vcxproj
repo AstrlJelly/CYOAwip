@@ -26,6 +26,7 @@
   <ItemGroup>
     <ClInclude Include="scripts\action.hpp" />
     <ClInclude Include="scripts\defines.hpp" />
+    <ClInclude Include="scripts\epic.hpp" />
     <ClInclude Include="scripts\main.hpp" />
     <ClInclude Include="scripts\node.hpp" />
   </ItemGroup>
@@ -85,7 +86,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\miniaudio\include;$(USERPROFILE)\Documents\vclib\pdcurses\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\miniaudio\include;$(USERPROFILE)\Documents\vclib\pdcurses\include;$(USERPROFILE)\Documents\vclib\boost;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,10 +127,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <StringPooling>true</StringPooling>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64\pdcurses.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

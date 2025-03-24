@@ -41,6 +41,9 @@
     <ClInclude Include="scripts\defines.hpp">
       <Filter>Code Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scripts\epic.hpp">
+      <Filter>Code Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

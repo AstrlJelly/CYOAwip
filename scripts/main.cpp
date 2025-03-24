@@ -2,6 +2,9 @@
 
 int main(int argc, char* argv[])
 {
+    WINDOW *main = initscr();
+    traceon();
+
     // local variable :D
     nodeDict nodes{};
 
@@ -11,7 +14,7 @@ int main(int argc, char* argv[])
 
     // TODO: load nodes based on when other nodes need them, not just every one in the folder
     //       how will i do this in a clean fashion? no clue. lmao
-    for (const fs::directory_entry& entry : fs::recursive_directory_iterator(NODES_PATH))
+    for (const fs::directory_entry& entry : fs::recursive_directory_iterator(rootPath))
     {
         fs::path filePath = entry.path();
 
@@ -46,6 +49,7 @@ int main(int argc, char* argv[])
     // no need for it to be async... yet.
     //std::async(std::launch::async, mainLoop, nodes);
 
+    //endwin();
     return 0;
 }
 
@@ -67,23 +71,25 @@ void mainLoop(nodeDict nodes, std::string beginNode) {
 
     if (!currentNode)
     {
-        std::cout << "Node with name \"" << currentNodeName << "\" was not a valid node.";
+        addstr("Node with name \"");
+        addstr(currentNodeName.c_str());
+        addstr("\" was not a valid node.");
+        refresh();
         return;
     }
 
-    // unused as of now
-    //variableMap globalVariables{};
+    nodeVariableMap globalVariables(defaultGlobalVariables);
 
     while (keepRunning)
     {
         // initialize vector with default variables
-        variableMap nodeVariables(nodeDefaultVariables);
+        nodeVariableMap nodeVariables(defaultNodeVariables);
         std::string nextNodeName;
         for (unsigned int i = 0; i < currentNode->getActionsSize(); i++)
         {
             Action* currentAction = currentNode->getActionAtIndex(i);
             nextNodeName.clear();
-            currentAction->execute(&nextNodeName, nodeVariables);
+            currentAction->execute(&nextNodeName, nodeVariables, globalVariables);
             // if there is a next node name, that means you have to move to a new node
             if (nextNodeName.length() > 0)
             {

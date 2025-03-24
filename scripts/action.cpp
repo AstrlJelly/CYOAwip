@@ -8,10 +8,10 @@ Text::Text(std::string text)
 void Text::execute(EXECUTE_PARAMETERS)
 {
     for (unsigned int i = 0; i < text.size(); i++) {
-        std::cout << text[i];
-        // eventually make the text speed a node global variable that can be set in an action
-        // allows for more slow, dramatic scenes, or quick rambles you're not meant to read
-        std::this_thread::sleep_for(std::chrono::milliseconds(nodeVariables["textdelay"]));
+        //std::cout << text[i];
+        addch(text[i]);
+        refresh();
+        std::this_thread::sleep_for(std::chrono::milliseconds(boost::get<long>(nodeVariables["textdelay"])));
     }
 }
 
@@ -119,29 +119,35 @@ Prompt::Prompt(std::string parametersStr)
 // only checks if entered option was valid if there are options to choose from
 void Prompt::execute(EXECUTE_PARAMETERS)
 {
-    std::string response;
+    std::string response(64, 0);
+    //std::string response;
     if (answers.size() > 0)
     {
         while (true)
         {
-            std::cout << PROMPT_PREFIX;
-            std::getline(std::cin, response);
+            //std::cout << PROMPT_PREFIX;
+            //std::getline(std::cin, response);
 
+            addstr(PROMPT_PREFIX);
+            getstr(&response[0]); // getstr calls refresh()
+            
             for (Answer answer : answers)
             {
-                if (answer.option == response)
+                if (std::strstr(answer.option.c_str(), response.c_str()))
                 {
                     *nextNodeName = answer.node;
                     return;
                 }
             }
-            std::cout << "Wrong response.\n";
+
+            addstr("Wrong response.\n");
+            refresh();
         }
     }
     else
     {
         // response is basically a discard variable here
-        std::getline(std::cin, response);
+        getstr(&response[0]);
     }
 }
 

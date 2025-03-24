@@ -27,6 +27,8 @@ constexpr auto NODES_PATH = "./nodes/";
           - when writing plain text, it will be interpreted 
             as a `;text` command with a line break at the end
 
+    ;pause {milliseconds} - pauses for a set number of milliseconds
+
     ;set - set custom variables
          - default node variables: textspeed
 
@@ -41,7 +43,7 @@ constexpr auto NODES_PATH = "./nodes/";
 
 */
 
-// TODO: classes deriving from Node so that you can have more specialized behaviour
+// TODO: classes deriving from Node so that you can have more specialized behaviour?
 //       (i.e BattleNode or StealthNode)
 
 #define SET_DEFAULT_ROOT_IF_NEEDED if (rootPath.length() <= 0) rootPath = defaultRootPath
@@ -69,4 +71,18 @@ public:
     size_t getActionsSize();
 };
 
-typedef std::unordered_map<std::string,Node*> nodeDict;
+//template <typename T>
+//class NodeVariable
+//{
+//private:
+//    T value;
+//
+//public:
+//    NodeVariable<T>(T value);
+//
+//    NodeVariable<T> fromString(std::string valueStr);
+//
+//    T getValue();
+//};
+
+typedef std::unordered_map<std::string, Node*> nodeDict;
