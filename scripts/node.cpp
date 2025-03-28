@@ -1,9 +1,5 @@
 #include "node.hpp"
 
-// this is to initialize a static variable in the Node class
-// this sucks...
-const char* Node::defaultRootPath = NODES_PATH;
-
 Node::Node()
 {
 	this->actions = {};
@@ -99,10 +95,8 @@ void Node::addAction(Action* action)
 	this->actions.push_back(action);
 }
 
-std::string Node::nameFromFilePath(std::filesystem::path filePath, std::string rootPath)
+std::string Node::nameFromFilePath(fs::path filePath, std::string rootPath)
 {
-    SET_DEFAULT_ROOT_IF_NEEDED;
-    
     std::string filePathStr = filePath.string();
     std::string extension = filePath.extension().string();
     // make it consistent, always keep \ to be /
@@ -122,10 +116,9 @@ std::string Node::nameFromFilePath(std::filesystem::path filePath, std::string r
     }
 }
 
-std::filesystem::path Node::filePathFromName(std::string name, std::string rootPath)
+fs::path Node::filePathFromName(std::string name, std::string rootPath)
 {
-    SET_DEFAULT_ROOT_IF_NEEDED;
-    return std::filesystem::path(rootPath) / std::filesystem::path(name);
+    return fs::path(rootPath) / fs::path(name);
 }
 
 Action* Node::getActionAtIndex(size_t index)

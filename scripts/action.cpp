@@ -5,13 +5,11 @@ Text::Text(std::string text)
     this->text = text;
 }
 
-void Text::execute(EXECUTE_PARAMETERS)
+void Text::execute(EpicContext* ctx)
 {
     for (unsigned int i = 0; i < text.size(); i++) {
-        //std::cout << text[i];
-        addch(text[i]);
-        refresh();
-        std::this_thread::sleep_for(std::chrono::milliseconds(boost::get<long>(nodeVariables["textdelay"])));
+        std::cout << text[i];
+        std::this_thread::sleep_for(std::chrono::milliseconds(boost::get<long>(ctx->nodeVariables["textdelay"])));
     }
 }
 
@@ -20,9 +18,9 @@ Pause::Pause(std::string parametersStr)
     this->pauseTime = std::chrono::milliseconds(std::stoi(parametersStr));
 }
 
-void Pause::execute(EXECUTE_PARAMETERS)
+void Pause::execute(EpicContext* ctx)
 {
-    std::this_thread::sleep_for(pauseTime);
+    std::this_thread::sleep_for(this->pauseTime);
 }
 
 Set::Set(std::string parametersStr)
@@ -32,9 +30,9 @@ Set::Set(std::string parametersStr)
     this->variableValue = std::stol(parametersStr.substr(spaceIndex));
 }
 
-void Set::execute(EXECUTE_PARAMETERS)
+void Set::execute(EpicContext* ctx)
 {
-    nodeVariables[variableName] = variableValue;
+    ctx->nodeVariables[variableName] = variableValue;
 }
 
 // bitmasks for prompt parameter parsing state machines
@@ -117,37 +115,34 @@ Prompt::Prompt(std::string parametersStr)
 
 // pauses the thread until enter is hit, 
 // only checks if entered option was valid if there are options to choose from
-void Prompt::execute(EXECUTE_PARAMETERS)
+void Prompt::execute(EpicContext* ctx)
 {
-    std::string response(64, 0);
+    std::string response;
     //std::string response;
     if (answers.size() > 0)
     {
         while (true)
         {
-            //std::cout << PROMPT_PREFIX;
-            //std::getline(std::cin, response);
-
-            addstr(PROMPT_PREFIX);
-            getstr(&response[0]); // getstr calls refresh()
+            std::cout << PROMPT_PREFIX;
+            std::getline(std::cin, response);
             
             for (Answer answer : answers)
             {
+                // funny function name. matches two strings
                 if (std::strstr(answer.option.c_str(), response.c_str()))
                 {
-                    *nextNodeName = answer.node;
+                    ctx->moveNode(answer.node);
                     return;
                 }
             }
 
-            addstr("Wrong response.\n");
-            refresh();
+            std::cout << "Wrong response.\n";
         }
     }
     else
     {
         // response is basically a discard variable here
-        getstr(&response[0]);
+        std::getline(std::cin,response);
     }
 }
 
@@ -158,7 +153,7 @@ PlaySFX::PlaySFX(std::string pathToSfx)
 }
 
 // unimplemented
-void PlaySFX::execute(EXECUTE_PARAMETERS)
+void PlaySFX::execute(EpicContext* ctx)
 {
 
 }
@@ -168,20 +163,10 @@ MoveTo::MoveTo(std::string nodeName)
     this->nodeName = nodeName;
 }
 
-void MoveTo::execute(EXECUTE_PARAMETERS)
+void MoveTo::execute(EpicContext* ctx)
 {
-    *nextNodeName = nodeName;
+    ctx->moveNode(this->nodeName);
 }
-
-// get at action name
-const std::unordered_map<std::string, std::function<Action* (std::string parameters)>> commands = {
-    { "text",    [](std::string p) { return new Text(p);    } },
-    { "pause",   [](std::string p) { return new Pause(p);   } },
-    { "set",     [](std::string p) { return new Set(p);     } },
-    { "prompt",  [](std::string p) { return new Prompt(p);  } },
-    { "playsfx", [](std::string p) { return new PlaySFX(p); } },
-    { "go",      [](std::string p) { return new MoveTo(p);  } },
-};
 
 Action* parseAction(std::string nodeText)
 {

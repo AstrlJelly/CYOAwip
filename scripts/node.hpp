@@ -2,12 +2,12 @@
 
 #include <iostream>
 #include <fstream>
-#include <filesystem>
+//#include <filesystem>
 #include <vector>
 
+#include "defines.hpp"
 #include "action.hpp"
 
-constexpr auto NODES_PATH = "./nodes/";
 
 /*
     .node format basic specifications
@@ -46,8 +46,6 @@ constexpr auto NODES_PATH = "./nodes/";
 // TODO: classes deriving from Node so that you can have more specialized behaviour?
 //       (i.e BattleNode or StealthNode)
 
-#define SET_DEFAULT_ROOT_IF_NEEDED if (rootPath.length() <= 0) rootPath = defaultRootPath
-
 class Node
 {
 private:
@@ -63,26 +61,9 @@ public:
 
     static Node* fromFile(std::string filePath);
 
-    static const char* defaultRootPath;
-    static std::string nameFromFilePath(std::filesystem::path filePath, std::string rootPath = "");
-    static std::filesystem::path filePathFromName(std::string name, std::string rootPath = "");
+    static std::string nameFromFilePath(fs::path filePath, std::string rootPath);
+    static fs::path filePathFromName(std::string name, std::string rootPath);
 
     Action* getActionAtIndex(size_t index);
     size_t getActionsSize();
 };
-
-//template <typename T>
-//class NodeVariable
-//{
-//private:
-//    T value;
-//
-//public:
-//    NodeVariable<T>(T value);
-//
-//    NodeVariable<T> fromString(std::string valueStr);
-//
-//    T getValue();
-//};
-
-typedef std::unordered_map<std::string, Node*> nodeDict;

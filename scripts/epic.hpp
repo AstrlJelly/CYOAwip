@@ -1,5 +1,16 @@
 #pragma once
 
+#include <string>
+
+#include "defines.hpp"
+#include "node.hpp"
+
+constexpr const char* EPICS_PATH = "./epics/";
+
+constexpr const char* START_EPIC = "testing";
+
+constexpr const char* NODES_PATH = "/nodes/";
+
 /*
 	epic specification
 
@@ -12,12 +23,9 @@
 
 */
 
-class Epic
+struct Epic
 {
-private:
+	Epic(fs::path epicPath);
 
-public:
-	Epic(std::string path)
-
-
+	nodeDict nodes;
 };

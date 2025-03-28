@@ -27,6 +27,12 @@
     <ClCompile Include="scripts\node.cpp">
       <Filter>Code Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="scripts\epic.cpp">
+      <Filter>Code Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\epic_context.cpp">
+      <Filter>Code Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scripts\action.hpp">
@@ -42,6 +48,9 @@
       <Filter>Code Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scripts\epic.hpp">
+      <Filter>Code Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\epic_context.hpp">
       <Filter>Code Header Files</Filter>
     </ClInclude>
   </ItemGroup>

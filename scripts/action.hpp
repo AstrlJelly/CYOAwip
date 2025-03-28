@@ -7,12 +7,11 @@
 #include <string>
 #include <unordered_map>
 
-#include "pdcurses/pdcurses.h"
-
 #include "defines.hpp"
+#include "epic_context.hpp"
 
-#define EXECUTE_PARAMETERS std::string* nextNodeName, nodeVariableMap nodeVariables, nodeVariableMap globalVariables
-#define EXECUTE_FUNC void execute(EXECUTE_PARAMETERS)
+//#define EXECUTE_PARAMETERS std::string* nextNodeName, nodeVariableMap nodeVariables, nodeVariableMap globalVariables
+#define EXECUTE_FUNC void execute(EpicContext* ctx)
 #define OVERRIDE_EXECUTE EXECUTE_FUNC override
 
 constexpr auto PROMPT_PREFIX = "?~ ";
@@ -96,3 +95,15 @@ public:
 };
 
 Action* parseAction(std::string nodeText);
+
+#define COMMAND_DEF(commandName, commandClass) { commandName, [](std::string p) { return new commandClass(p); } }
+
+// get at action name
+const std::unordered_map<std::string,std::function<Action* (std::string parameters)>> commands = {
+    COMMAND_DEF("text",Text),
+    COMMAND_DEF("pause",Pause),
+    COMMAND_DEF("set",Set),
+    COMMAND_DEF("prompt",Prompt),
+    COMMAND_DEF("playsfx",PlaySFX),
+    COMMAND_DEF("go",MoveTo),
+};
