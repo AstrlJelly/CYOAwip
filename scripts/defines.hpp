@@ -9,15 +9,18 @@
 #include <boost/variant.hpp>
 
 namespace fs = boost::filesystem;
-//namespace fs = std::filesystem;
 
-// define messy variable types here so they're easy to change
-typedef boost::variant<long,bool,std::string> nodeVariable;
-typedef std::unordered_map<std::string, nodeVariable> nodeVariableMap;
+// video settings
+const std::string WINDOW_TITLE = "CYOA (Work In Progress)";
+const int WINDOW_WIDTH = 1920 / 2;
+const int WINDOW_HEIGHT = 1080 / 2;
 
 // no magic strings/variables ^.^
 constexpr auto SAVE_PATH = "./save.txt";
+
+// this will eventually be defined in the epic's json
 const std::string BEGIN_NODE = "start";
+
 //const std::chrono::milliseconds defaultTextSpeed = std::chrono::milliseconds(30);
 const long defaultTextDelay = 30L;
 

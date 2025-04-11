@@ -27,7 +27,7 @@ Set::Set(std::string parametersStr)
 {
     size_t spaceIndex = parametersStr.find_first_of(' ');
     this->variableName = parametersStr.substr(0, spaceIndex);
-    this->variableValue = std::stol(parametersStr.substr(spaceIndex));
+    //this->variableValue = std::stol(parametersStr.substr(spaceIndex));
 }
 
 void Set::execute(EpicContext* ctx)

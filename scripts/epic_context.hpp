@@ -1,42 +1,44 @@
 #pragma once
 
 #include <string>
+#include <iostream>
+#include <fstream>
 #include <unordered_map>
 
 #include "defines.hpp"
-//#include "node.hpp"
-class Epic;
-class Node;
 
-typedef std::unordered_map<std::string,Node*> nodeDict;
+//typedef std::string epstr;
+//typedef bool epbool;
+//typedef long int epint;
+//typedef double epfloat;
+typedef boost::variant<long,bool,std::string> epicVariable;
+typedef std::unordered_map<std::string,epicVariable> epicVariableMap;
 
 struct EpicContext
 {
 	EpicContext(fs::path epicPath, std::string startNode);
 	~EpicContext();
 
-	//operator ActionExecuteData();
+	void saveCurrentNode();
+	static std::string loadSavedNode();
 
-	bool executeCurrentNode();
-	void saveSpot();
 	void moveNode(std::string newNodeName);
 
-	Node* getCurrentNode();
-
-	void setGlobalVariable(std::string varName,nodeVariable value);
-	void setNodeVariable(std::string varName,nodeVariable value);
+	void setGlobalVariable(std::string varName,epicVariable value);
+	void setNodeVariable(std::string varName,epicVariable value);
 
 	std::string currentNodeName;
 
-	#define ADD_VAR(varName, value) {varName,nodeVariable(value)}
+	#define ADD_VAR(varName, value) {varName,epicVariable(value)}
 
-	const nodeVariableMap defaultGlobalVariables = {
+	const epicVariableMap defaultGlobalVariables = {
 	};
-	const nodeVariableMap defaultNodeVariables = {
+	const epicVariableMap defaultNodeVariables = {
 		ADD_VAR("textdelay",defaultTextDelay)
 	};
-	nodeVariableMap globalVariables;
-	nodeVariableMap nodeVariables;
 
-	Epic* epic;
+	#undef ADD_VAR
+
+	epicVariableMap globalVariables;
+	epicVariableMap nodeVariables;
 };

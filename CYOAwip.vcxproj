@@ -89,12 +89,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\miniaudio\include;$(USERPROFILE)\Documents\vclib\boost;$(USERPROFILE)\Documents\vclib\SDL3\include;$(USERPROFILE)\Documents\vclib\SDL3_ttf\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(USERPROFILE)\Documents\vclib\boost\stage\lib;$(USERPROFILE)\Documents\vclib\SDL3_ttf\lib\x64;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\boost;$(USERPROFILE)\Documents\vclib\SDL3\include;$(USERPROFILE)\Documents\vclib\SDL3_ttf\include;$(USERPROFILE)\Documents\vclib\portaudio\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(USERPROFILE)\Documents\vclib\boost\stage\lib;$(USERPROFILE)\Documents\vclib\SDL3_ttf\lib\x64;$(USERPROFILE)\Documents\vclib\portaudio\build\Debug;$(USERPROFILE)\Documents\vclib\SDL3\build\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\miniaudio\include;$(USERPROFILE)\Documents\vclib\boost;$(USERPROFILE)\Documents\vclib\SDL3\include;$(USERPROFILE)\Documents\vclib\SDL3_ttf\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(USERPROFILE)\Documents\vclib\boost\stage\lib;$(USERPROFILE)\Documents\vclib\SDL3_ttf\lib\x64;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(USERPROFILE)\Documents\vclib\boost;$(USERPROFILE)\Documents\vclib\SDL3\include;$(USERPROFILE)\Documents\vclib\SDL3_ttf\include;$(USERPROFILE)\Documents\vclib\portaudio\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(USERPROFILE)\Documents\vclib\boost\stage\lib;$(USERPROFILE)\Documents\vclib\SDL3_ttf\lib\x64;$(USERPROFILE)\Documents\vclib\portaudio\build\Debug;$(USERPROFILE)\Documents\vclib\SDL3\build\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64;$(LibraryPath)</LibraryPath>
@@ -147,7 +147,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64\pdcurses.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64\pdcurses.lib;$(USERPROFILE)\Documents\vclib\SDL3\build\Debug\SDL3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,7 +166,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64\pdcurses.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(USERPROFILE)\Documents\vclib\pdcurses\lib\x64\pdcurses.lib;$(USERPROFILE)\Documents\vclib\SDL3\build\Debug\SDL3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

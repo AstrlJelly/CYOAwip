@@ -2,11 +2,7 @@
 
 int main(int argc, char* argv[])
 {
-    std::string beginNode{};
-    std::stringstream beginNodeStream{};
-    std::ifstream saveFile(SAVE_PATH);
-    beginNodeStream << saveFile.rdbuf();
-    beginNode = beginNodeStream.str();
+    std::string beginNode = EpicContext::loadSavedNode();
 
     // if save file didn't exist, check cli args
     // if not cli args, get default beginning node
@@ -18,24 +14,57 @@ int main(int argc, char* argv[])
     epicPath += START_EPIC;
     epicPath += NODES_PATH;
 
-    EpicContext* ctx = new EpicContext(epicPath, beginNode);
+    Epic* epic = new Epic(epicPath,beginNode);
 
-    mainLoop(ctx);
+    SDL_Window* window = nullptr;
+    initSDL(window);
 
-    // no need for it to be async... yet.
-    //std::async(std::launch::async, mainLoop, nodes);
+    //while(true)
+    //{
+    //    bool keepRunning = epic->executeCurrentNode();
+    //    if(!keepRunning)
+    //    {
+    //        break;
+    //    }
+    //}
 
-    //endwin();
+    while(true)
+    {
+        update();
+    }
+
     return 0;
 }
 
-void mainLoop(EpicContext* ctx)
+void initSDL(SDL_Window* window)
 {
-    bool keepRunning = true;
+    SDL_SetMainReady();
 
+    bool initSuccess = SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_GAMEPAD);
+    if(!initSuccess) {
+        const char* error = SDL_GetError();
+        std::cerr << "SDL_Init failed: \n" << error << '\n';
+        SDL_Quit();
+        exit(0);
+    }
+    
+    window = SDL_CreateWindow(WINDOW_TITLE.c_str(),WINDOW_WIDTH,WINDOW_HEIGHT,SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
+    if(window == NULL) {
+        const char* error = SDL_GetError();
+        std::cerr << "Couldn't set video mode: \n" << error << '\n';
+        exit(0);
+    }
+}
 
-    while (keepRunning)
+// runs every frame
+void update()
+{
+    SDL_Event e;
+    if(SDL_PollEvent(&e))
     {
-        ctx->executeCurrentNode();
+        if(e.key.key == SDLK_P)
+        {
+            exit(0);
+        }
     }
 }

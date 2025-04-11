@@ -7,6 +7,7 @@
 
 #include "defines.hpp"
 #include "action.hpp"
+#include "epic_context.hpp"
 
 
 /*
@@ -67,3 +68,5 @@ public:
     Action* getActionAtIndex(size_t index);
     size_t getActionsSize();
 };
+
+typedef std::unordered_map<std::string,Node*> nodeDict;

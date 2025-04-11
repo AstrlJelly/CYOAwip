@@ -90,35 +90,34 @@ Node* Node::fromFile(std::string filePath)
     return new Node(filePath);
 }
 
-void Node::addAction(Action* action)
-{
-	this->actions.push_back(action);
-}
-
-std::string Node::nameFromFilePath(fs::path filePath, std::string rootPath)
+std::string Node::nameFromFilePath(fs::path filePath,std::string rootPath)
 {
     std::string filePathStr = filePath.string();
     std::string extension = filePath.extension().string();
     // make it consistent, always keep \ to be /
-    std::replace(filePathStr.begin(), filePathStr.end(), '\\', '/');
+    std::replace(filePathStr.begin(),filePathStr.end(),'\\','/');
 
     size_t startIndex = rootPath.length();
-    std::string nodeName = filePathStr.substr(startIndex, filePathStr.length() - extension.length() - startIndex);
+    std::string nodeName = filePathStr.substr(startIndex,filePathStr.length() - extension.length() - startIndex);
 
-    if (nodeName == "null")
+    if(nodeName == "null")
     {
         std::cerr << "\"null\" is a reserved node name!\n";
         return "";
-    }
-    else
+    } else
     {
         return nodeName;
     }
 }
 
-fs::path Node::filePathFromName(std::string name, std::string rootPath)
+fs::path Node::filePathFromName(std::string name,std::string rootPath)
 {
     return fs::path(rootPath) / fs::path(name);
+}
+
+void Node::addAction(Action* action)
+{
+	this->actions.push_back(action);
 }
 
 Action* Node::getActionAtIndex(size_t index)
@@ -130,22 +129,3 @@ size_t Node::getActionsSize()
 {
     return actions.size();
 }
-
-//template <typename T>
-//inline NodeVariable<T>::NodeVariable(T value)
-//{
-//    this->value = value;
-//}
-//
-//template<typename T>
-//NodeVariable<T> NodeVariable<T>::fromString(std::string valueStr)
-//{
-//    
-//    return NodeVariable<T>();
-//}
-//
-//template <typename T>
-//T NodeVariable<T>::getValue()
-//{
-//    return value;
-//}

@@ -10,7 +10,7 @@
 #include "defines.hpp"
 #include "epic_context.hpp"
 
-//#define EXECUTE_PARAMETERS std::string* nextNodeName, nodeVariableMap nodeVariables, nodeVariableMap globalVariables
+//#define EXECUTE_PARAMETERS std::string* nextNodeName, epicVariableMap nodeVariables, epicVariableMap globalVariables
 #define EXECUTE_FUNC void execute(EpicContext* ctx)
 #define OVERRIDE_EXECUTE EXECUTE_FUNC override
 
@@ -46,14 +46,25 @@ public:
     OVERRIDE_EXECUTE;
 };
 
-class Set : public Action
+class Set: public Action
 {
 private:
     std::string variableName;
-    long variableValue;
+    epicVariable variableValue;
 
 public:
     Set(std::string parametersStr);
+    OVERRIDE_EXECUTE;
+};
+
+class SetGlobal: public Action
+{
+private:
+    std::string variableName;
+    epicVariable variableValue;
+
+public:
+    SetGlobal(std::string parametersStr);
     OVERRIDE_EXECUTE;
 };
 
@@ -107,3 +118,7 @@ const std::unordered_map<std::string,std::function<Action* (std::string paramete
     COMMAND_DEF("playsfx",PlaySFX),
     COMMAND_DEF("go",MoveTo),
 };
+
+#undef EXECUTE_FUNC
+#undef OVERRIDE_EXECUTE
+#undef COMMAND_DEF

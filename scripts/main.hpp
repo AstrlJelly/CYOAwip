@@ -11,12 +11,15 @@
 
 #include <boost/variant.hpp>
 
+// is this intended to fix shit?? idfk :sob:
+#define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
 // use when implementing ;playsfx action
-#define MINIAUDIO_IMPLEMENTATION
-#include <miniaudio/miniaudio.h>
+//#define MINIAUDIO_IMPLEMENTATION
+//#include <miniaudio/miniaudio.h>
 
 //#include "pdcurses/pdcurses.h"
 
@@ -28,6 +31,6 @@
 // `using namespace std` was intentionally left out
 // i like how my code looks with the std:: more than without
 
-int main(int argc, char* argv[]);
-void mainLoop(EpicContext* ctx);
-void saveSpot(EpicContext* ctx);
+int main(int argc,char* argv[]);
+void initSDL(SDL_Window* window);
+void update();
